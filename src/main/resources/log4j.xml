@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Appender: クライアントログ(コンソール) -->
+	<appender name="clientStdout" class="org.apache.log4j.ConsoleAppender">
+		<param name="Threshold" value="info" />
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%X{timestamp},%X{ipAddress},%X{level},%t,%X{sourceClass},%X{message}%n" />
+		</layout>
+	</appender>
+
+	<!-- Appender: クライアントログ(ファイル：ファイルサイズでローテーション) -->
+	<appender name="clientRollingFile" class="org.apache.log4j.RollingFileAppender">
+		<param name="Threshold" value="warn" />
+		<param name="File" value="./log/client.log" />
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="MaxFileSize" value="10MB" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%X{timestamp},%X{ipAddress},%X{level},%t,%X{sourceClass},%X{message}%n" />
+		</layout>
+	</appender>
+
+	<!-- Appender: クライアントログ(ファイル：日付でローテーション) -->
+	<appender name="clientDailyRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="warn" />
+		<param name="File" value="./log/client.log" />
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%X{timestamp},%X{ipAddress},%X{level},%t,%X{sourceClass},%X{message}%n" />
+		</layout>
+	</appender>
+
+	<!-- Appender: サーバーログ(コンソール) -->
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<param name="Threshold" value="info" />
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS},%p,%t,%c{1},%m%n" />
+		</layout>
+	</appender>
+
+	<!-- Appender: サーバーログ(ファイル：ファイルサイズでローテーション) -->
+	<appender name="rollingFile" class="org.apache.log4j.RollingFileAppender">
+		<param name="Threshold" value="warn" />
+		<param name="File" value="./log/server.log" />
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="MaxFileSize" value="10MB" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS},%p,%t,%c{1},%m%n" />
+		</layout>
+	</appender>
+
+	<!-- Appender: サーバーログ(ファイル：日付でローテーション) -->
+	<appender name="dailyRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="warn" />
+		<param name="File" value="./log/server.log" />
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS},%p,%t,%c{1},%m%n" />
+		</layout>
+	</appender>
+
+	<!-- Logger: クライアントログ -->
+	<logger name="com.purejadeite.servlet.ClientLogServlet" additivity="false">
+		<level value ="info" />
+		<appender-ref ref="clientStdout" />
+		<appender-ref ref="clientDailyRollingFile" />
+	</logger>
+
+	<!-- Logger: サーバーログ(クライアントログ以外) -->
+	<root>
+		<level value ="info" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="dailyRollingFile" />
+	</root>
+
+</log4j:configuration>
