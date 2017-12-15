@@ -80,6 +80,11 @@ public class AbstractController {
 	 * リソースがなかった場合の例外
 	 */
 	protected static class NotFoundException extends RuntimeException {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1952891518630364681L;
 	}
 
 	// リクエストから削除するパラメーター
